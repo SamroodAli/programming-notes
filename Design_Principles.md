@@ -1,12 +1,11 @@
 # DESIGN PATTERNS
 
 #### Solid Design Principles - by Robert C Martin.
-
-
 ### Single Responsibility Principle
-This principle states that a single Class should have a single responsibility.
+
+This principle states that a single Class/Function/Component should handle a single responsibility.
 Lets save we have a journal that handles entries and then persists the data using file operations.
-Following the Single Responsibiltiy principle, we should seperate the file persistence concerns from the journal entries concerns
+Following the Single Responsibiltiy principle, we should seperate the file persistence concerns from the journal entry concerns
 ```js
 // class Jounral only handles the responsibility related to the journal and it's entries
 const fs = require('fs')
@@ -43,6 +42,6 @@ class PersistenceManager
 ```
 #### Anti-pattern - God Object
 Anti patterns are opposite principles. Often considered bad.
-There is an oppposite antry pattern God object is a single object handling all the responsibilities. This is a bad principle in most cases.
+There is an oppposite anti pattern to single responsibility principle known as the `God object` which is a single object handling all the responsibilities. This is a bad principle in most cases.
 
 There is the related principle `Seperation of concerns` where you have different concerns. Seperate them into differnet components
