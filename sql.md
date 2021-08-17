@@ -42,8 +42,23 @@ The order of the columns have to match the values entered. They can be in a diff
 ```sql
 INSERT INTO cities (name,country,population,area) 
 VALUES
-	('Tokyo','Japan',39105000,8223),
+  ('Tokyo','Japan',39105000,8223),
   ('Shanghai','China',22125000,4015),
   ('Sao Paulo','Brazil',20935000,3043);
+```
 
+#### SELECT
+Get everything with `*`
+```sql
+SELECT * FROM table_name
+```
+
+Get specific columns from the table by explicitly stating columns
+```sql
+SELECT name,population FROM cities
+```
+Listing columns multiple times is also valid
+
+```sql
+SELECT name,name,name FROM cities
 ```
