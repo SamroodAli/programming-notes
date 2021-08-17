@@ -1,4 +1,4 @@
-#SQL
+# SQL
 
 Answers to ask when designing up a database 
 ```md
@@ -38,3 +38,12 @@ VALUES ('values in single quotes',20000);
 ```
 The order of the columns have to match the values entered. They can be in a different order but the values entered have to match their columns
 
+#### INSERT INTO -> Multiple rows
+```sql
+INSERT INTO cities (name,country,population,area) 
+VALUES
+	('Tokyo','Japan',39105000,8223),
+  ('Shanghai','China',22125000,4015),
+  ('Sao Paulo','Brazil',20935000,3043);
+
+```
