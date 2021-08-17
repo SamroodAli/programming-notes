@@ -22,3 +22,17 @@ examples of data types -> VARCHAR ,INTEGER etc
 ### Column Data Types
 VARCHAR -> Variable length character. Text!
 INTEGET -> Numbers without a decimal. -2,147,483,647 to +2,147,483,647 (2 billion)
+
+#### QUERIES AND STATEMENTS
+A query is a single request to the database server and a query can contain multiple statements seperated by `;`
+#### CREATE TABLE
+```sql
+CREATE TABLE table_name (column1 VARCHAR(50),column2 INTEGER);
+
+```
+#### INSERT INTO TABLE
+```sql
+INSERT INTO table_name (column1,column2)
+VALUES ('values in single quotes',20000);
+```
+
