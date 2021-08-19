@@ -8,4 +8,4 @@ For that, Like any language, there are rules or protocols.
 ...skip to packets
 
 ### Packets
-Packets are bite sized data.
+Computers in the network talk to each other and share data. These data are divided into small pieces called `packets`.
