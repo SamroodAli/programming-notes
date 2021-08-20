@@ -54,11 +54,26 @@ SELECT * FROM table_name
 ```
 
 Get specific columns from the table by explicitly stating columns
+
 ```sql
 SELECT name,population FROM cities
 ```
+
 Listing columns multiple times is also valid
 
 ```sql
 SELECT name,name,name FROM cities
 ```
+
+### We can also do calculations on the values in the table
+
+```sql
+SELECT population/area FROM cities
+```
+
+This is like a virtual column and has no name. So we can use the `AS` keyword to name these virtual columns.
+
+```sql
+SELECT population/area AS population_density FROM cities
+```
+
