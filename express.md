@@ -32,8 +32,68 @@ The inbuilt http module lets node share data using the HTTP protocol and helps u
 const http = require("http");
 ```
 
-2. Create a server using the http module
+2. Write a callback to read requests and send responses
+```js
+function onRequest(req, res) {
+  //  The route is in req.url
+  if (req.url === "/") {
+    // user wants the home page
+    // writing to http header
+    res.writeHead(200, { "Content-type": "text/html" });
+    // reading from a html file
+    const homePagehtml = fs.readFileSync(__dirname + "/index.html");
+    // writing the content of the html file as response
+    res.write(homePagehtml);
+    // ending the connection
+    res.end();
+  } else if (req.url.match(/^.*\.css/)) { // else if req.url match any css files
+    // write the header and set mime type to css 
+    res.writeHead(200, { "Content-type": "text/css" });
+    // get css file
+    const stylesheet = fs.readFileSync(__dirname + "/style.css");
+    // write the content of the css file as response
+    res.write(stylesheet);
+    // end connection
+    res.end();
+  } else if (req.url.match(/^.*\.(jpg|JPG|gif|GIF|png)$/)) { // if request path match any images // dynamic route example
+    let image;
+    // try to load the image if available
+    try {
+      //load the image
+      image = fs.readFileSync(__dirname + req.url);
+      // set mime type to image/png
+      res.writeHead(200, { "Content-type": "image/png" });
+    } catch (e) {
+      // if no image, write reponse content
+      image = `<h1>Image Not found</h1>`;
+      // set status code to 404=> content not found
+      res.writeHead(404, { "Content-type": "text/html" });
+    }
+    // write response (image or 404 response content)    
+    res.write(image);
+    // end connection
+    res.end();
+  } else {
+    // else respond with 404 page
+    res.writeHead(404, { "Content-type": "text/html" });
+    const homePagehtml = fs.readFileSync(__dirname + "/index.html");
+    res.write(homePagehtml);
+    res.end();
+  }
+}
+
+
+```
+3. Create a server using the http module and pass in the callback
 
 ```js
-const server = http.createServer()
+const server = http.createServer(onRequest)
 ```
+
+4. Set a port for the server to listen on
+
+```js
+server.listen(3000,()=>{console.log("server listening on port 3000")})
+```
+
+
