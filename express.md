@@ -12,7 +12,7 @@ Our responsibility is to ingest this data (request in data packets) and respond 
 Are we capable of handling this responsibility ?
 Yes, Node has the ability to do this. Google's software known as the `v8 Engine` in chrome can handle this and Node uses this software.
 
-#### A server
+### A server
 
 Every computer has the ability to talk to each other on a network using http protocols.There are 2^16 network ports made available in a machine. Ports application can attach themselves to and listen for requests and respond.
 
