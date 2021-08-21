@@ -82,7 +82,6 @@ function onRequest(req, res) {
   }
 }
 
-
 ```
 3. Create a server using the http module and pass in the callback
 

@@ -59,14 +59,15 @@ Get specific columns from the table by explicitly stating columns
 SELECT name,population FROM cities
 ```
 
-Listing columns multiple times is also valid
+Listing columns multiple times is also valid. They are some thing 
 
 ```sql
 SELECT name,name,name FROM cities
 ```
 
-### We can also do calculations on the values in the table
+### We can also do operations on the values in the table
 
+#### Integer operations
 ```sql
 SELECT population/area FROM cities
 ```
@@ -76,4 +77,73 @@ This is like a virtual column and has no name. So we can use the `AS` keyword to
 ```sql
 SELECT population/area AS population_density FROM cities
 ```
+
+#### String operations
+
+
+##### Pipe operator
+```sql
+SELECT name || country AS city_population FROM cities
+gives you
+```
+gives you rows as
+
+```
+city_polulation
+
+Tokyo, 38505000
+Delhi, 28125000
+Shanghai, 22125000
+Sao Paulo, 20935000
+```
+
+#### Using functions
+##### Concat function
+
+```sql
+SELECT CONCAT(name,country) AS location FROM cities
+```
+gives the same result as above
+
+you can also add strings in between
+```sql
+SELECT name || ', ' || country FROM cities;
+SELECT CONCAT(name, ', ' , country ) FROM cities ;
+```
+These will add a comma and a space between name and country
+
+```
+city_polulation
+
+Tokyo, 38505000
+Delhi, 28125000
+Shanghai, 22125000
+Sao Paulo, 20935000
+```
+
+##### LOWER AND UPPER
+They mostly act like javascript functions.
+```sql
+SELECT LOWER(name) FROM cities
+```
+will give your names in lower case
+
+```sql
+SELECT UPPER(name) FROM cities
+```
+will ofcourse uppercase the names.
+##### LENGTH returns the length of the string
+
+```sql
+SELECT LENGTH(name) FROM cities
+```
+will give the length of the names of each **cities**
+
+
+#### Nesting multiple function calls
+We can nest functions in sql
+```
+SELECT UPPER(CONCAT(name,', ', country)) FROM cities
+```
+will give the result as in concat function above but in uppercase
 
