@@ -139,6 +139,7 @@ SELECT LENGTH(name) FROM cities
 ```
 will give the length of the names of each **cities**
 
+[See more functions on W3Schools](https://www.w3schools.com/sql/sql_ref_sqlserver.asp)
 
 #### Nesting multiple function calls
 We can nest functions in sql
