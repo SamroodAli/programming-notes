@@ -40,24 +40,28 @@ app.all()
 app.use()
 ```
 
+### Middleware pattern
+
+instead of one giant function that handles the incoming request, we seperate into mini functions where the incoming request goes through each of them.
+These functions are called middlewares
 ### Middlewares
 Express is basically writing middlewares.
 Requests Request <========Middlewares=======> Response
 Middlewares sit between requests and responses and are how we take a request and respond to it. Middleware is essentially what we pass into a route matcher function like ones above as a callback.
+
 ```js
 // Match all routes
 app.use(middleware) // matches all routes
 app.use("/admin",middleware) // matches /admin
 app.get("/",middleware) // matches get method / route
-
 ```
 
 `Middlewares is just a function that uses the req/res and next arguments.`
 
+
 Before that, let's learn about express's top down approach.
 
 lets say we wrote two functionality which match the same route.
-
 ```js
 //validate user
 app.get("/",function validatesUserEveryTime(req,res){

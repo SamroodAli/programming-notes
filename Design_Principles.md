@@ -44,4 +44,4 @@ class PersistenceManager
 Anti patterns are opposite principles. Often considered bad.
 There is an oppposite anti pattern to single responsibility principle known as the `God object` which is a single object handling all the responsibilities. This is a bad principle in most cases.
 
-There is the related principle `Seperation of concerns` where you have different concerns. Seperate them into differnet components
+There is the related principle `Seperation of concerns` where you have different concerns. Seperate them into differnet components.
