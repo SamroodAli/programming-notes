@@ -10,4 +10,3 @@
 . Limitations of a single js file but numerous requests being slow => Intro to webpack
 1. Limitations of imperative programming => Intro to functional programming => Intro to React => Intro to virtual Dom.
 ```
-

@@ -190,8 +190,11 @@ const server = http.createServer()
 server.on('request',onRequest)
 ```
 The server object also takes another callback for client errors, i.e errors in the incoming request http message using the same `on` method and an event called `clientError`.
+
 ```js
-function OnError(){}
+function OnError(err){
+  console.error(err)
+}
 server.on('clientError',onError)
 ```
 
@@ -200,4 +203,14 @@ So when a request comes into node, it does not directly run the `request` callba
 ```md
 if error=> server.emit('clientError')
 else server.emit('request')
+```
+
+There are a list of ways we can get corrupted client HTTP request ( one example is misformated json data). If that happens, node immediately knows and emits the event 'clientError' and the run the callback passed to server object via `on` with event'clientError'. Node collects info about the error and bundles it up in an object called `error` and passes it as the argument when invoking the onError callback.
+There is also a second argument which is an access to the socket directly. There is no autocreated HTTP message (with access to write it in an object (res)). We have to add text in HTTP format that will turn this into an HTTP format if we want.
+
+```js
+function onError(err,socket){
+  console.error(err)
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+}
 ```
