@@ -111,3 +111,18 @@ const student = new mongoose.Schema({
 required:true is a validation whereas unique is an index
 
 #### Document API
+
+find and update
+
+```js
+  return User.findIdAndUpdate(id,update,{new:true}) , if you dont pass in the option new:true, it will update and still give you the old object before update.
+```
+
+### Query object
+Pretty much every query we do on a model returns a query object (looks like promises). They have a `then` method on it. Anything consuming the query thinks it a promise, but it is not a real promise. So to avoid that, we use .exec() after query to tell that you are done and there is no more further query which returns a real promise.
+
+```js
+User.findById(id).exec()
+```
+
+This is only for queries, not for create,delete ,update etc but needed for findByIdAndRemove etc

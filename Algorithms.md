@@ -19,10 +19,11 @@ Logarithmic
 ```math
 f(n) = log(n)
 ```
+
 Linear
 
 ```math
-f(n) = n
+f(n) = ngim1
 ```
 
 Log-Linear
@@ -30,18 +31,64 @@ Log-Linear
 f(n) = n * log(n)
 ```
 
-Polynomial
+### Polynomial
+
 ```math
-f(n) = n^2,n^3,n^4,...
+f(n) = n^c
+
 ```
 
+Quadratic - polynomial
+```math
+f(n) = n^2
+```
+
+Cubic - polynomial
+```math
+f(n) = n^3
+```
+
+
+
+### Exponential
 Exponential
 
+#### `n is in the exponent part`
+
+
 ```math
-f(n) = 2^n,3^n,4^n,...
+f(n) = c^n
 ```
 
-Factorial
+Examples:
+
 ```math
-f(n) = n!
+f(n) = 2^n
 ```
+
+```math
+f(n) = 3^n
+```
+
+### Polynomial vs Exponential
+#### `Polynomial is better than exponential`
+Any exponential function is better than any polynomial function as n grows to infinity
+
+```math
+n^2  < 2^n
+```
+
+| n |  Polynomial| Exponential |
+| :---: | :---: | :---: |
+| n |  n^2| 2^n |
+| 0 | 0 | 1 |
+| 1 | 1 | 2 |
+| 2 | 4 | 6 |
+| 3 | 9 | 12 |
+| 4 | 16 | 24 |
+| 5 | 25 | 48 |
+| 6 | 36 | 96 |
+
+
+
+### Factorial
