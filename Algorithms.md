@@ -15,7 +15,7 @@ Linear
 f(n) = ngim1
 ```
 
-Log-Linear
+### Log-Linear
 ```math
 f(n) = n * log(n)
 ```
@@ -60,6 +60,8 @@ f(n) = 2^n
 ```math
 f(n) = 3^n
 ```
+
+![Exponential example from App academy](images/Exponential-example.png)
 
 ### Polynomial vs Exponential
 #### `Polynomial is better than exponential`
