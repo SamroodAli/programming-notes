@@ -56,10 +56,12 @@ Examples:
 ```math
 f(n) = 2^n
 ```
+In n^2, we always branch twice
 
 ```math
 f(n) = 3^n
 ```
+In n^3 , we always branch thrice.
 
 ![Exponential example from App academy](images/Exponential-example.png)
 
@@ -90,6 +92,14 @@ Even worse than the exponential and polynomial
 ```
 
 !4 = 4 * 3 * 2 * 1
+
+![Factorial example from App Academy](images/Factorial-example.png)
+In the example, we branch
+four times to four 3s
+three times to twelve 2s
+two times to twenty four 1s
+### Exponential vs Factorial
+In exponential functions, the number of times we branch is constant whereas in factorial, the number of branch keeps on changing.
 
 # Measure of scale of performance - BIG O
 We should focus on how the performance of our algorithm is effected by the increasing size of the input. In other words, how does our performance scale ?
