@@ -21,6 +21,7 @@ f(n) = n * log(n)
 ```
 
 ![nLogn](images/nlogn-code-example.png)
+Pic from App academy open.
 
 ### Polynomial
 
@@ -29,6 +30,7 @@ f(n) = n^c
 
 ```
 
+![Polynomial example from App academy open](images/polynomial-example.png)
 Quadratic - polynomial
 ```math
 f(n) = n^2
