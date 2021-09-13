@@ -1,21 +1,28 @@
 ## Common Math Operations
 
-Constant
+### Constant
+Constant (O(1)) complexity means that the algorithm takes roughly the same number of steps for any size input. In a constant time algorithm there is no relationship between the size of the input and the number of steps required.
 ```math
 f(n) = y
 ```
-Logarithmic
+### Logarithmic
+ Logarithmic complexity algorithms will typically have a sense of continually "halving" the size of the input. Another tell of a Logarithmic algorithm is that we don't have to touch every element of the input. O(log2(n)) means that every time we double the size of the input, we only require one additional step.
+
 ```math
 f(n) = log(n)
 ```
 
-Linear
+### Linear
+Linear complexity algorithms will touch each element of the input "once" (in the Big-O sense). Algorithms that iterate through the input without nested loops or recurse by reducing the size of the input by "one" each time are typically Linear. Classic Example: Checking if an element exists in an Array.
 
 ```math
 f(n) = ngim1
 ```
 
 ### Log-Linear
+This complexity class is common in recursive sorting algorithms such as mergeSort and quickSort. This class is a combination of both linear and logarithmic behavior, so features from both classes are evident. Typically, this means that the recursive calls will halve the input each time (logarithmic), but iterations are also performed (linear). Classic Example: Merge Sort Algorithm.
+
+
 ```math
 f(n) = n * log(n)
 ```
@@ -24,6 +31,7 @@ f(n) = n * log(n)
 Pic from App academy open.
 
 ### Polynomial
+Polynomial complexity refers to complexity of the form O(nc) where n is the size of the input and c is some fixed constant. For example, O(n3) is a larger/worse function than O(n2), but they belong to the same complexity family. Nested loops are usually the indicator of this complexity class. Classic Examples: Generate all pairs of elements in an array (n2). Generate all triplets of elements in an array (n3).
 
 ```math
 f(n) = n^c
@@ -42,6 +50,9 @@ f(n) = n^3
 ```
 
 ### Exponential
+Exponential complexity refers to functions of the form O(cn) where n is the size of the input and c is some fixed constant. For example, O(3n) is a larger/worse function than O(2n), but they both belong to the same complexity family. A common indicator of this complexity class is recursive code where there is a `constant number of recursive calls in each stack frame`. The c will be the number of recursive calls made in each stack frame. Algorithms with this complexity are considered quite slow. Classic Example: Generate all subsets/combinations of elements in an array (O(2n)). In subsets/combinations, the order does not matter.
+
+
 Exponential
 
 #### `n is in the exponent part`
@@ -87,11 +98,18 @@ n^2  < 2^n
 ### Factorial
 
 Even worse than the exponential and polynomial
+
+Recall that n! = (n) * (n - 1) * (n - 2) * ... * 1. This complexity is typically the largest/worst we will end up implementing. A typical indicator of this complexity class is recursive code that has a variable number of recursive calls in each stack frame. Note that Factorial is worse than Exponential because Factorial algorithms have a variable amount of recursive calls in each frame, whereas Exponential algorithms have a constant amount in each frame. Classic Example: Generate all permutations of elements in an array. In permutations, the order does matter.
+
+
 ```math
 !n = n * (n-1) * (n-2) ... * 1
 ```
-
-!4 = 4 * 3 * 2 * 1
+Example
+```math
+!4 = 4 * 3 * 2 * 1 = 24
+```
+The number of times we branch is tied to our input
 
 ![Factorial example from App Academy](images/Factorial-example.png)
 In the example, we branch
@@ -103,6 +121,9 @@ In exponential functions, the number of times we branch is constant whereas in f
 
 # Measure of scale of performance - BIG O
 We should focus on how the performance of our algorithm is effected by the increasing size of the input. In other words, how does our performance scale ?
+
+
+[Read more here on app academy](https://open.appacademy.io/learn/full-stack-online/data-structures-and-algorithms/common-complexity-classes-notes)
 
 ## Important Rules
 1. The function should be defined in terms of the size of the input. We are interested in the behaviour as the input size approaches infinity.

@@ -156,3 +156,6 @@ array.push(10)
 
 ## Types of types
 [Read on Mike north's typescript website](https://www.typescript-training.com/course/fundamentals-v3/05-structural-vs-nominal-types/)
+
+
+## Union and Intersection types
