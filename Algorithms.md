@@ -20,6 +20,8 @@ Log-Linear
 f(n) = n * log(n)
 ```
 
+![nLogn]('./images/nlogn-code-example.png')
+
 ### Polynomial
 
 ```math
@@ -105,3 +107,38 @@ Space required by the algorithm, not inluding the space taken up by the inputs.
 * Reference types(arrays,objects,map,set) are O(n),where n is the length (for arrays) or the number of keys(objects)
 
 
+## Simplifying Big-O
+### Products
+If the function is product of many factors, we drop the factors that don't depend on the size of the input
+
+```math
+T(5n^2) => T(5*n^2)=> O(n^2)
+```
+```math
+T(1000n) => T(1000 * n) => O(n)
+```
+```math
+T(42nlogn) => T(42*n*logn)=>O(nlogn)
+```
+
+```math
+T(12)=> O(1)
+```
+
+### Sum
+if the function is the sum of many terms, we keep the term with the largest growth rate and drop the other terms.
+```math
+T(n^3 + n^2 + n^) => O(n^3)
+```
+
+```math
+T(log(n) + n^2) =>  O(n^2)
+```
+
+```math
+T(n + log(n)) => O(n)
+```
+
+```math
+T(n! + 10n) => O(n!)
+```
