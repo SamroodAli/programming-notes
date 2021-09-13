@@ -20,7 +20,7 @@ Log-Linear
 f(n) = n * log(n)
 ```
 
-![nLogn]('./images/nlogn-code-example.png')
+![nLogn]('/images/nlogn-code-example.png')
 
 ### Polynomial
 
