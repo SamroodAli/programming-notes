@@ -57,7 +57,7 @@ let car:{
   chargeVoltage?:number
 }
 ```
-#### Type guard
+## Type guard
 
 ```ts
 let user: {
@@ -88,13 +88,6 @@ function printUser(user:{
 
  printUser(user)
 
-```
-
-#### Multiple types with | (or)
-```ts
-let something:string | number;
-something  = 10
-something  ="Samrood"
 ```
 
 #### Index signatures - Consistent values (dictionaries) in objects
@@ -158,4 +151,88 @@ array.push(10)
 [Read on Mike north's typescript website](https://www.typescript-training.com/course/fundamentals-v3/05-structural-vs-nominal-types/)
 
 
-## Union and Intersection types
+## Union types ( string | number )
+We create Union types with |
+"success" | "error"
+string | number
+```ts
+function flipCoin():"heads" | "tails" {
+  if(Math.random()> 0.5)return "heads";
+  return "tails";
+}
+```
+```ts
+function maybeGetUserInfo():
+  | ["error", Error]
+  | ["success", { name: string; email: string }] {
+  if (flipCoin() === "heads") {
+    return [
+      "success",
+      { name: "Mike North", email: "mike@example.com" },
+    ]
+  } else {
+    return [
+      "error",
+      new Error("The coin landed on TAILS :("),
+    ]
+  }
+
+```
+
+
+[Check out the chapter here on Union and Intersection](https://www.typescript-training.com/course/fundamentals-v3/06-union-and-intersection-types/)
+
+## Intersection types ( Date & {end: Date} )
+```ts
+const ONE_WEEK = 1000 * 60 * 60 * 24 * 7 // 1w in ms
+/// ---cut---
+function makeWeek(): Date & { end: Date } {
+  //⬅ return type
+
+  const start = new Date()
+  const end = new Date(start.valueOf() + ONE_WEEK)
+
+  return { ...start, end } // kind of Object.assign
+}
+
+const thisWeek = makeWeek()
+thisWeek.toISOString()
+thisWeek.end.toISOString()
+
+```
+
+## Type Aliases
+We can reuse types using the type keyword
+
+```ts
+type ReactTextNode = string | number
+
+function getText(score):ReactTextNode {
+  if (score > 100) return "Congratulations, you have won";
+  return score
+}
+```
+
+```ts
+type car = {make:string,number:string,year:number}
+```
+
+With our previous tagging example
+
+```ts
+type UserInfoOutcomeError= = ["error" , Error]
+type UserInforOutcomeSuccess = ["success",{name:string,profession:string}]
+type UserInfoOutcome = UserInfoOutcomeError |UserInforOutcomeSuccess
+
+
+function getUserInfo() : UserInfoOutcome{
+  if(some error reason)return ["error",new Error("reason for error")]
+  return ["success",{name:"Samrood",profession:"Programmer"}]
+}
+
+```
+## Type Inheritance
+
+```ts
+type SpecialDate = Date & {getReason():string}
+```
