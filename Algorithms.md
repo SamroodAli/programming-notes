@@ -187,3 +187,8 @@ Because every recursive problem must have a base and recursive case, we can foll
 1. Identify the base case in the problem and code it. The base case should explicity handle the scenario(s) where the arguments are so trivially "small", that we immediately know the result without further calculation. Be sure it works by testing it.
 2. Solve the next level of the problem, using the result of the base case. Test it.
 3. Modify the code in step 2, generalizing it for every level of the problem.
+
+### When is recursion appropriate?
+Recursion allows us to solve problems in an elegant way. However, recursion is a tool that is only appropriate for certain problems. Look to the struture of a problem to figure out if it can be solved recursively. 
+Recursion is used to solve problems that can be decomposed into smaller versions of the same problem. 
+For example we can decompose fib(n) into fib(n - 1) + fib(n - 2). Intuitively, we know that fib(n - 1) is a "smaller" or "easier" problem than fib(n). The easiest subproblem is fib(1) or fib(2) because the answer is simply 1; this is an assumption in the fibonacci sequence. We use the easiest subproblems as the base case in recursion.

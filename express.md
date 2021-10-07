@@ -63,6 +63,7 @@ You can pass an argument to next which will be treated as error (the error objec
 
 Requests Request <======== Middlewares =======> Controller'sResponse
 Middlewares sit between requests and responses and are how we take a request and respond to it. Middleware is essentially what we pass into a route matcher function like ones above as a callback.
+Express is basically writing middlewares
 
 We use middlewares using `app.use()`
 ```js
@@ -71,6 +72,9 @@ app.use(middleware) // matches all routes
 app.use("/admin",middleware) // matches /admin
 app.get("/",middleware) // matches get method / route
 ```
+
+App.use matches all verbs and "/" matches all as long as it starts with "/", i.e , "/", "/users/" etc
+
 ### controller/middleware erity
 in app's verbs, you can register as many controllers/middlewares as we need.
 ```js
@@ -89,6 +93,7 @@ app.get("/data",logHelpers,function(req,res){})
 app.get("/user,[createLineInConsole,logger,authenticator],function(req,res){})
 ```
 
+Each controller has to call `next` parameter to pass functionality to the next one.
 
 `Middlewares is just a function that uses the req/res and next arguments.`
 
@@ -154,13 +159,15 @@ const json = function(req, res, next) {
 app.use(json)
 ```
 In express, you have to use `app.use(json())`
+
+
+### CORS
+Cors middleware makes our server CORS enabled. Cross Origin resource sharing. If we have a website on mydomain.com and server on otherdomain.com, the browser might not allow us to interact with the server's domain as it is a cross domain. Server to server does not really respect CORS, this is for the browser. Allows everyone to consume our APIs.
 ### { urlencoded } from body-parser
-This also like json transforms the request.It allows to attach parameters to a url. Like a query string (with question mark)
-
-
+This middleware, also like json, transforms the request. UrlencodedeAs per RFC 3986, characters found in a URL must be present in the defined set of reserved and unreserved ASCII characters. However, URL encoding allows characters which otherwise would be not permitted to be represented with help of allowed characters. URL encoding is used mostly for non-ASCII control characters – characters beyond the ASCII character set of 128 characters and reserved characters such as the semicolon, equal sign, space or caret. 
+Http forms are usually url encoded, this middleware allows you to view this data (of the type url-encoded such x-forms-url-encoded) and it is attached to req.body
 ### morgan
-It does logging for us
-
+It does logging for us. It logs the route and query strings etc to the console
 
 ### REST routes with Express
 REST api is a combination of a route and an HTTP verb
@@ -174,7 +181,7 @@ Stick to exact and parameter matching
 
 
 # Sub Routers -  Express Router
-You can seperate the express functionality into seperate routers.
+You can seperate express functionality into seperate routers.
 
 ```js
 const user = Express.

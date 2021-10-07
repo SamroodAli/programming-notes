@@ -86,7 +86,7 @@ const Student = mongoose.model('student',student)
 ```
 
 Student here is actually a mongoose document (not a mongo document) and not a javascript object. It has a lot of APIs. It cannot be logged out (as these Object is not inumerable.)
-Sometimes we might need to convert these documents JSON as these documents are slow.
+Sometimes we might need to convert these documents to JSON as these documents are slow.
 
 These are mongoose documents, not mongo documents. Mongoose wraps around mongo. Mongo just takes and spits JSON. Mongoose wraps around this JSON, virtualises it and provides many helpes/APIs or methods that lets us operate on these documents within the confines of mongoose.
 
@@ -119,10 +119,12 @@ find and update
 ```
 
 ### Query object
-Pretty much every query we do on a model returns a query object (looks like promises). They have a `then` method on it. Anything consuming the query thinks it a promise, but it is not a real promise. So to avoid that, we use .exec() after query to tell that you are done and there is no more further query which returns a real promise.
+Pretty much every query we do on a model returns a query object (looks like promises). They have a `then` method on it. Anything consuming the query thinks it a promise, but it is not a real promise. So  to avoid that, we use .exec() after query to tell that you are done and there is no more further query which returns a real promise.
 
 ```js
 User.findById(id).exec()
 ```
 
 This is only for queries, not for create,delete ,update etc but needed for findByIdAndRemove etc
+
+# CRUD OPERATIONS IN MONGOOOSE

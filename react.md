@@ -526,3 +526,14 @@ useEffect(() => {
   }
 }, [debouncedTerm]);
 ```
+
+## Setting up to listen to events outside the component
+1. The component needs to detect a click event on any element besides the one it created.
+2. The component has a hard time setting up an event handler on elements that it does not create.
+3. Event bubbling is a thing.
+
+
+### Solution
+
+1. The component can set up a manual event listener on the body element
+2. A click on any element will bubble up to the body
