@@ -1,5 +1,11 @@
 # Docker notes - Stephen Grider
 
+## Container isolation
+
+Containers are isolated from each other using linux's namespaces.
+
+# Hello-world
+
 ```bash
 docker run hello-world
 
@@ -140,3 +146,50 @@ We can also manually send a SIGKILL command using `docker kill`
 ```bash
 docker kill $containerId
 ```
+
+Background on Process and std i/o
+a process is any active (running) instance of a program.
+But what is a program? Well, technically, a program is any executable file held in storage on your machine. Anytime you run a program, you have created a process.
+Like a container is an instance of an Image. A container can run processes since it is OS level virtualisation.
+
+Every process has three streams attached
+
+[Wikipedia's definition for streams](https://en.wikipedia.org/wiki/Standard_streams):
+In computer programming, standard streams are interconnected input and output communication channels[1] between a computer program and its environment when it begins execution. The three input/output (I/O) connections are called standard input (stdin), standard output (stdout) and standard error (stderr).
+
+So we can use to talk to a process using these three streams.
+
+1. Stdin (Standard input) lets us input information to a process.
+2. Stdout (standard output) outputs information from a process.
+3. Stderr (standard error) outouts error information from a process.
+
+### The -it flag (-i flag and -t flag)
+
+We can attach to the stdi/o of a process using the -i/--interactive flag.
+and we can attach a virtual terminal session to the process using -t flag.
+
+Using only the -i flag lets us access to std i/o but it won't be prettily formatted among other things such as auto-completion done by a terminal.
+Using only the -t flag gives a virtual terminal but not attached to any process.
+
+## Executing additional commands in a container
+
+Sometimes we want to execute commands inside one or another container. For example, we might have a container running redix. We can execute command to it with the -it flag( interactively in a pseudo terminal session) with the exec command
+
+```bash
+docker exec -it $containerId/containerName command
+```
+
+Sometimes if we don't give the -it flad, the command might run and kick us out since we cant enter any information anyways.
+
+## Opening up a shell/terminal in a container
+
+We can use `sh` command to open up shell/terminal in containers
+We can combine that with `exec` to open shells in any container.
+Some containers even has bash built in.
+
+```bash
+docker exec -it $containerId sh
+```
+
+Note:
+`Docker run` opens up the shell with the -it flag. This prevents from the default command/executable from running. This is only if there is the `sh` command configured in the Image. for the hello-world example, there is no shell in that image.
