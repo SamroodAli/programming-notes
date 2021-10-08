@@ -318,3 +318,37 @@ If we declared a variable, but did not assign a variable,the type is going to be
 let number; // type is `any`
 number = 5;
 ```
+
+`Avoid 'any' types at any cost.`
+
+# When to use type annotation
+
+1 ) Functions that return any type, example: JSON.parse()
+2 ) Delayed initialization (declaration and initialization in different lines)
+3 ) Where type was inferred but was incorrect
+
+example
+
+```ts
+let numbers = [-10, -1, 12];
+let numberAboveZero = false;
+
+numbers.forEach((num) => {
+  if (num > 0) {
+    numberAboveZero = num; // there will be a type error as typescript thought numberAboveZero is always going to be a boolean value, so we need to give type annotation
+  }
+});
+```
+
+fix with type annotation:
+
+```ts
+let numbers = [-10, -1, 12];
+let numberAboveZero: boolean | number = false;
+
+numbers.forEach((num) => {
+  if (num > 0) {
+    numberAboveZero = num; // there will be a type error as typescript thought numberAboveZero is always going to be a boolean value, so we need to give type annotation
+  }
+});
+```
