@@ -1,3 +1,37 @@
+- [Welcome to TypeScript](#welcome-to-typescript)
+  - [Variables](#variables)
+    - [Let variables](#let-variables)
+    - [Const variables](#const-variables)
+  - [Functions](#functions)
+  - [Collections: [Arrays, Objects, Types]](#collections-arrays-objects-types)
+    - [Object: type is the shape of the data](#object-type-is-the-shape-of-the-data)
+      - [Optional property with ?:](#optional-property-with-)
+  - [Type guard](#type-guard)
+      - [Index signatures - Consistent values (dictionaries) in objects](#index-signatures---consistent-values-dictionaries-in-objects)
+      - [Preventing against keys that does not exit when indexing (allowing any keys)](#preventing-against-keys-that-does-not-exit-when-indexing-allowing-any-keys)
+  - [Arrays.](#arrays)
+  - [Tuples](#tuples)
+  - [Types of types](#types-of-types)
+  - [Union types ( string | number )](#union-types--string--number-)
+  - [Intersection types ( Date & {end: Date} )](#intersection-types--date--end-date-)
+  - [Type Aliases](#type-aliases)
+  - [Type Inheritance](#type-inheritance)
+    - [Annotations with Object literal](#annotations-with-object-literal)
+  - [Inference](#inference)
+    - [When to use type annotation](#when-to-use-type-annotation)
+  - [Type Annotation with functions](#type-annotation-with-functions)
+    - [Annotating function `variables`](#annotating-function-variables)
+    - [Annotation for function values](#annotation-for-function-values)
+  - [Type inference with functions](#type-inference-with-functions)
+  - [Void](#void)
+  - [never](#never)
+    - [Objects as arguments](#objects-as-arguments)
+      - [Without desctructuring](#without-desctructuring)
+      - [With destructuring](#with-destructuring)
+      - [With interface](#with-interface)
+      - [With type alias](#with-type-alias)
+- [Annotations about objects](#annotations-about-objects)
+
 # Welcome to TypeScript
 
 [Notes](https://www.typescript-training.com/course/fundamentals-v3) from mike north's typscript fundamentals
@@ -293,14 +327,6 @@ interface Point {
 let point: Point = { x: 10, y: 20 };
 ```
 
-### Annotation with functions
-
-```ts
-const logNumber: Function = (i: number): string => {
-  return "a string";
-};
-```
-
 ## Inference
 
 Inference is when typescript figures out what types are
@@ -321,7 +347,7 @@ number = 5;
 
 `Avoid 'any' types at any cost.`
 
-# When to use type annotation
+### When to use type annotation
 
 1 ) Functions that return any type, example: JSON.parse()
 2 ) Delayed initialization (declaration and initialization in different lines)
@@ -351,4 +377,124 @@ numbers.forEach((num) => {
     numberAboveZero = num; // there will be a type error as typescript thought numberAboveZero is always going to be a boolean value, so we need to give type annotation
   }
 });
+```
+
+## Type Annotation with functions
+
+### Annotating function `variables`
+
+```ts
+let add: (a: number, b: number) => number; // here we say add's type is a function that takes two numbers and returns a number
+```
+
+### Annotation for function values
+
+Here we say assigned function's types for arguments and return value.
+
+```ts
+add = (a: number, b: number): number => a + b;
+```
+
+## Type inference with functions
+
+Type inference for functions tries to figure out what type of value a function will return
+Hence, always annotate arguements
+But we are also going to annotate return values to void bugs,where we forgot the return keyword for example.
+
+## Void
+
+when we dont want to return anything from a function,the function is said to return void. Technically though it can still return null or undefined.
+
+## never
+
+the return type if we will `never` reach the end of the function/return anything
+
+```ts
+const throwError = (message: string): never => {
+  throw new Error(message);
+};
+```
+
+### Objects as arguments
+
+#### Without desctructuring
+
+```ts
+const user = {
+  name: "Samrood",
+  age: 21,
+};
+
+function printPlayer(player: { name: string; age: number }) {
+  return player.name;
+}
+```
+
+#### With destructuring
+
+```ts
+const user = {
+  name: "Samrood",
+  age: 21,
+};
+
+function printPlayer({ name, age }: { name: string; age: number }) {
+  return name;
+}
+```
+
+#### With interface
+
+```ts
+const user = {
+  name: "Samrood",
+  age: 21,
+};
+interface player {
+  name: string;
+  age: number;
+}
+
+function printPlayer({ name, age }: player) {
+  return name;
+}
+```
+
+#### With type alias
+
+```ts
+const user = {
+  name: "Samrood",
+  age: 21,
+};
+
+type player = {
+  name: string;
+  age: number;
+};
+
+function printPlayer({ name, age }: player) {
+  return name;
+}
+```
+
+# Annotations about objects
+
+```ts
+const profile = {
+  player: "alex",
+  age: 20,
+  coords: {
+    lat: 0,
+    lng: 15,
+  },
+  setAge(age: number): void {
+    this.age = age;
+  },
+};
+
+const {
+  coords: { lat, lng },
+}: { coords: { lat: number; lng: number } } = profile;
+console.log(lat, lng);
 ```
