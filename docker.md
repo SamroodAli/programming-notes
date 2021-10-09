@@ -13,6 +13,10 @@
 - [Section 3: Creating Custom images](#section-3-creating-custom-images)
   - [Steps to create a custom image](#steps-to-create-a-custom-image)
 - [Dockerfile](#dockerfile)
+- [Docker Build .](#docker-build-)
+    - [Building from cache ( docker memoizing with image generation)](#building-from-cache--docker-memoizing-with-image-generation)
+- [Tagging an image](#tagging-an-image)
+- [Commit: Creating an image from a container](#commit-creating-an-image-from-a-container)
 
 ## Container isolation
 
@@ -261,3 +265,67 @@ We will use file explorer to navigate to the installer
 We will execute that installer
 
 So in order to install chrome, we wanted tools an OS provides. This is what alpine does. Among other programs, Alpine has a package manager that helps us install packages such as redis.
+
+# Docker Build .
+
+Command to build a custom image. It takes in a build context. Here ( . ) It passes the build context with the Dockerfile to the docker cli/client which passses to
+
+Docker daemon runs each instruction in the Dockerfile in a temporay container created from the image from the previous instruction
+
+1.
+
+```Dockerfile
+FROM alpine
+# Returns the alpine image
+```
+
+Since there is no previous image, docker gets the image from image cache or docker hub and returns an image, lets call it image A
+
+2.
+
+```Dockerfile
+RUN apk add --update redis
+```
+
+This is an instruction for aline to install redis
+Docker creates a new container from image created before (image A which has alpine) and starts running the instruction. It returns a new image with redis inside (Let's call it image B) and destroys the container it was running in.
+
+3
+
+```Dockerfile
+CMD ["redis-server]
+```
+
+This is an instruction to set the primary executable of an image to the argument provided. We want the image B with redis to always execute `redis-server` when it is run by default.
+
+Docker creates a new container from image B which contains redis and starts running the instruction. It returns a new image (image C ) which has the primary executable command set and destory the intermediary container this was running in.
+
+1.  No Image = >runs FROM alpine => return Image with alpine from hub
+2.  Image with alpine => creates an intermediary container from the Image => runs `RUN apk...` => removes intermediary container just created => returns a new image with alpine and redis
+3.  Image with alpine and redis => creates an intermiedary container => runs `CMD ['....']` => removes the intermiedary container => returns a new image with alpine and redis with default executable set.
+
+### Building from cache ( docker memoizing with image generation)
+
+`Building docker again images from uses from cache as much as possible`
+
+# Tagging an image
+
+We can tag an image with -t flag. Technically only the version number(right of the :) is the tag. The convention is to use a number or `latest` for the latest one. You still have to provide the build context.
+
+```Dockerfile
+docker build -t yourId/nameOfImage:latest .
+```
+
+# Commit: Creating an image from a container
+
+We can create an image from a running container (take a snapshot of it's fs and create an executable) by the commit command.
+
+```Dockerfile
+docker commit containerId
+```
+
+To add a default executable command , use the --change, or -c flag
+
+```Dockerfile
+docker commit -c 'CMD ["default command"]' containerId
+```
