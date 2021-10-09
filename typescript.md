@@ -31,6 +31,7 @@
       - [With interface](#with-interface)
       - [With type alias](#with-type-alias)
 - [Annotations about objects](#annotations-about-objects)
+- [Annotations with arrays and tuples](#annotations-with-arrays-and-tuples)
 
 # Welcome to TypeScript
 
@@ -464,7 +465,9 @@ function printPlayer({ name, age }: player) {
 
 ```ts
 const user = {
-  name: "Samrood",
+  name: "Samrood",**
+
+  **
   age: 21,
 };
 
@@ -498,3 +501,5 @@ const {
 }: { coords: { lat: number; lng: number } } = profile;
 console.log(lat, lng);
 ```
+
+# Annotations with arrays and tuples

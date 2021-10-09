@@ -1,4 +1,18 @@
-# Docker notes - Stephen Grider
+- [Hello-world](#hello-world)
+- [Docker commands](#docker-commands)
+    - [Docker run](#docker-run)
+    - [Docker create](#docker-create)
+    - [Docker start](#docker-start)
+    - [Docker start to restart](#docker-start-to-restart)
+    - [Cleaning up containers with `prune`](#cleaning-up-containers-with-prune)
+    - [Getting logs from a container using docker logs](#getting-logs-from-a-container-using-docker-logs)
+    - [Stopping a docker container with stop](#stopping-a-docker-container-with-stop)
+    - [The -it flag (-i flag and -t flag)](#the--it-flag--i-flag-and--t-flag)
+  - [Executing additional commands in a container](#executing-additional-commands-in-a-container)
+  - [Opening up a shell/terminal in a container](#opening-up-a-shellterminal-in-a-container)
+- [Section 3: Creating Custom images](#section-3-creating-custom-images)
+  - [Steps to create a custom image](#steps-to-create-a-custom-image)
+- [Dockerfile](#dockerfile)
 
 ## Container isolation
 
@@ -193,3 +207,57 @@ docker exec -it $containerId sh
 
 Note:
 `Docker run` opens up the shell with the -it flag. This prevents from the default command/executable from running. This is only if there is the `sh` command configured in the Image. for the hello-world example, there is no shell in that image.
+
+# Section 3: Creating Custom images
+
+## Steps to create a custom image
+
+1. Create Dockerfile
+
+```bash
+touch Dockerfile
+```
+
+2. Write instructions
+
+```Dockerfile
+
+# Use an existing docker image as a base
+FROM alpine
+
+# Download and install a dependency
+RUN apk add --update redis
+
+# Tell the image what to do when it starts as a container
+CMD [ "redis-server" ]
+```
+
+3.Build it with docker client and daemon
+
+```bash
+# Inside the folder where Dockerfile is
+docker build .
+```
+
+# Dockerfile
+
+Dockerfile is what docker daemon uses to build the image.
+It is a list of instructions to prepare our image.
+Instructions are commands followed by arguments
+
+```Dockerfile
+#  COMMAND = FROM, argument = alpinee
+FROM alpine
+```
+
+Analogy from Stephen Grider
+`Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome`
+
+alpine
+Alpine is a linux distribution.Imagine we want to install chrome in a computer with no os.
+We will first install an operating system
+We will use it's default browser to get the chrome installer
+We will use file explorer to navigate to the installer
+We will execute that installer
+
+So in order to install chrome, we wanted tools an OS provides. This is what alpine does. Among other programs, Alpine has a package manager that helps us install packages such as redis.
