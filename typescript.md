@@ -16,6 +16,11 @@
   - [Intersection types ( Date & {end: Date} )](#intersection-types--date--end-date-)
   - [Type Aliases](#type-aliases)
   - [Type Inheritance](#type-inheritance)
+- [Stephen grider typescript course](#stephen-grider-typescript-course)
+- [Types](#types)
+- [Type annotation vs inference](#type-annotation-vs-inference)
+  - [Annotation](#annotation)
+    - [Annotations with class](#annotations-with-class)
     - [Annotations with Object literal](#annotations-with-object-literal)
   - [Inference](#inference)
     - [When to use type annotation](#when-to-use-type-annotation)
@@ -32,6 +37,15 @@
       - [With type alias](#with-type-alias)
 - [Annotations about objects](#annotations-about-objects)
 - [Annotations with arrays and tuples](#annotations-with-arrays-and-tuples)
+  - [Type inference with arrays](#type-inference-with-arrays)
+  - [Type annotation with arrays](#type-annotation-with-arrays)
+    - [Flexible types](#flexible-types)
+- [Tuples](#tuples-1)
+    - [Read only Arrays](#read-only-arrays)
+    - [Array of tuples](#array-of-tuples)
+- [Interface](#interface)
+- [Class with typescript](#class-with-typescript)
+  - [Fields (variables) in classes](#fields-variables-in-classes)
 
 # Welcome to TypeScript
 
@@ -269,7 +283,7 @@ type car = { make: string; number: string; year: number };
 
 With our previous tagging example
 
-**```ts**
+```ts
 type UserInfoOutcomeError= = ["error" , Error]
 type UserInforOutcomeSuccess = ["success",{name:string,profession:string}]
 type UserInfoOutcome = UserInfoOutcomeError |UserInforOutcomeSuccess
@@ -279,13 +293,13 @@ if(some error reason)return ["error",new Error("reason for error")]
 return ["success",{name:"Samrood",profession:"Programmer"}]
 }
 
-````
+```
 
 ## Type Inheritance
 
 ```ts
 type SpecialDate = Date & { getReason(): string };
-````
+```
 
 # Stephen grider typescript course
 
@@ -400,7 +414,7 @@ add = (a: number, b: number): number => a + b;
 
 Type inference for functions tries to figure out what type of value a function will return
 Hence, always annotate arguements
-But we are also going to annotate return values to void bugs,where we forgot the return keyword for example.
+But we are also going to annotate return values to void bugs,where we forgot the return kveyword for example.
 
 ## Void
 
@@ -503,3 +517,129 @@ console.log(lat, lng);
 ```
 
 # Annotations with arrays and tuples
+
+## Type inference with arrays
+
+```ts
+const array = ["String", "String again", "Again string"];
+// this will be inferred by typescript to be an array
+```
+
+## Type annotation with arrays
+
+```ts
+const array: string[] = []; // this will be an array of string
+```
+
+### Flexible types
+
+```ts
+const array: (string | number)[] = ["String", 100];
+```
+
+# Tuples
+
+Array like structure where each element represents some property of a record.
+
+```ts
+const tuple: [string, boolean, number] = ["string", true, 100];
+```
+
+example of a record represented in tuple:
+
+```ts
+// record
+const user = {
+  name:"Samrood,
+  score:100
+}
+// in tuple
+const user: [string, number] = ["Samrood", 100];
+// with aliases
+type name = string;
+type score = number;
+
+const user: [name, score] = ["Samrood", 100];
+
+```
+
+### Read only Arrays
+
+```ts
+const players: ReadonlyArray<string> = ["Samrood", "Samreena", "Sanjeed"];
+```
+
+### Array of tuples
+
+```ts
+type name = string;
+type score = number;
+
+const user: [name, score][] = [
+  ["Samrood", 100],
+  ["Leon", 200],
+];
+```
+
+# Interface
+
+```ts
+interface Calculator {
+  readonly name: string;
+  digits: number;
+  scientific?: true;
+  add: (a: number, b: number) => number;
+  multiply(a: number, b: number): number;
+}
+
+let cal: Calculator = {
+  name: "Cool calc",
+  digits: 14,
+  scientific: true, //optional
+  add: (a, b) => a + b,
+  multiply(a, b) {
+    return a + b;
+  },
+};
+```
+
+# Class with typescript
+
+Class methods can have modifiers in typescript
+
+```ts
+class App {
+  public hello() {
+    // this is the default modifer for methods in a class.
+  }
+
+  private hi() {
+    // this is only accessible in this class.
+  }
+
+  protected hiyya() {
+    // this is accessible in this class and inherited classes.
+  }
+}
+```
+
+## Fields (variables) in classes
+
+```ts
+class Car {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+```
+
+There is a shorthand to write the same logic as above:
+
+```ts
+class Car {
+  constructor(public name: string) {} // this body {} is still needed
+}
+```
+
+The modifiers can also be protected or private fields just like with methods

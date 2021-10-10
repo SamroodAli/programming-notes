@@ -17,6 +17,7 @@
     - [Building from cache ( docker memoizing with image generation)](#building-from-cache--docker-memoizing-with-image-generation)
 - [Tagging an image](#tagging-an-image)
 - [Commit: Creating an image from a container](#commit-creating-an-image-from-a-container)
+- [Copy command in Dockerfile](#copy-command-in-dockerfile)
 
 ## Container isolation
 
@@ -328,4 +329,13 @@ To add a default executable command , use the --change, or -c flag
 
 ```Dockerfile
 docker commit -c 'CMD ["default command"]' containerId
+```
+
+# Copy command in Dockerfile
+
+We can copy files from one directory to a directory in our image using the copy command
+
+```Dockerfile
+COPY ./ ./
+# copy everything from our project folder(where Dockerfile exists to inside image)
 ```
