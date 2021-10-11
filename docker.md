@@ -18,6 +18,8 @@
 - [Tagging an image](#tagging-an-image)
 - [Commit: Creating an image from a container](#commit-creating-an-image-from-a-container)
 - [Copy command in Dockerfile](#copy-command-in-dockerfile)
+- [Publish flag: Port mapping](#publish-flag-port-mapping)
+- [Setting Working directory using WORKDIR](#setting-working-directory-using-workdir)
 
 ## Container isolation
 
@@ -195,7 +197,7 @@ Using only the -t flag gives a virtual terminal but not attached to any process.
 Sometimes we want to execute commands inside one or another container. For example, we might have a container running redix. We can execute command to it with the -it flag( interactively in a pseudo terminal session) with the exec command
 
 ```bash
-docker exec -it $containerId/containerName command
+docker exec -it $containerId command
 ```
 
 Sometimes if we don't give the -it flad, the command might run and kick us out since we cant enter any information anyways.
@@ -338,4 +340,33 @@ We can copy files from one directory to a directory in our image using the copy 
 ```Dockerfile
 COPY ./ ./
 # copy everything from our project folder(where Dockerfile exists to inside image)
+```
+
+# Publish flag: Port mapping
+
+We can publish a container's port to the host's port with --publish or -p flags.
+
+```bash
+docker run -p hostPort:contanerPort containerId/name
+```
+
+```bash
+docker run -p 3000:8080 containerid/name
+# another example
+docker run -p 3000:3000 containerId/name
+```
+
+# Setting Working directory using WORKDIR
+
+WORKDIR helps us set our directory context relative to the argument of WORKDIR
+./ becomes whatever WORKDIR is
+
+```Dockerfile
+WORKDIR directoryPath
+```
+
+common place to put our work is /usr/app
+
+```Dockerfile
+WORKDIR /usr/app
 ```
