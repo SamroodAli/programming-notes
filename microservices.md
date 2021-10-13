@@ -39,3 +39,12 @@ In asynchronous communication, services talk to each other using events. There w
 One is similar to synchronous method but with events. Each service might not have it's own db and get's relevant information from other services using events. This has the same downsides as synchronous communication.
 
 The other way is where each service is independent and do not rely on other services. Each service, if it needs data has it's own database. An event bus communicates with each service through events if an event happens. If a request to one service affects another service, the event bus recieves the event from the service that got the request and sends that event to the other service.
+
+# Creating a microservice app from scratch
+
+Steps:
+1. Create a service for each resource
+2. Describe the responsibilities of each resource
+3. Determine dependencies between resources3. Determine dependencies between resources3. Determine dependencies between resources
+4. Write out request response goals: what paths, methods, data are required for each goal
+  -4.1: The paths might have dependencies posts/:id/comments 
