@@ -622,6 +622,19 @@ There are two ways to put data in context and two ways to get data out of it
 export default React.createContext('default value here as argument')
 ```
 #### Provider
+Each provider creates a seperate stream of data flow.
+```ts
+import Context from "./where/your/context/is
+
+class Foo extends React.Component {
+  render(){
+    <Context.Consumer>
+    <Context>
+  }
+}
+
+```
+
 
 ### To get data
 #### this.context
@@ -653,3 +666,11 @@ class Component ...{
 }
 ```
 #### Consumer
+This is used when we have multiple context objects.
+ It also uses a render prop
+
+```js
+  <LanguageContext.Consumer>
+    {(value) => this.renderSubmit(value)}
+  </LanguageContext.Consumer>
+```
