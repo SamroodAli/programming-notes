@@ -46,6 +46,7 @@
 - [Interface](#interface)
 - [Class with typescript](#class-with-typescript)
   - [Fields (variables) in classes](#fields-variables-in-classes)
+- [ReturnType and typeof](#returntype-and-typeof)
 
 # Welcome to TypeScript
 
@@ -643,3 +644,20 @@ class Car {
 ```
 
 The modifiers can also be protected or private fields just like with methods
+
+# ReturnType and typeof 
+We can use ReturnType with typeof to get type of something
+
+```ts
+import { combineReducers } from "redux";
+import repositoriesReducer from "./respositoriesReducer";
+
+const reducers = combineReducers({
+  repositories: repositoriesReducer,
+});
+
+export type RootState = ReturnType<typeof reducers>;
+
+export default reducers;
+
+```

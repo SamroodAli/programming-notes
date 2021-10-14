@@ -323,3 +323,21 @@ A container component does the following
 
 # Connect API from React-Redux
 Connect abstracts away what a container component does and gives you back a container component that calls a presentational components.
+
+# Designing store with typescript
+1. Design State
+-Resource
+* Data
+* Error
+* Loading
+2. Design folder structure
+  -Components
+    App
+  -Redux
+    reducers
+    actions_creators
+    middle-wares
+    __________
+    index.page
+
+

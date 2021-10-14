@@ -48,3 +48,4 @@ Steps:
 3. Determine dependencies between resources3. Determine dependencies between resources3. Determine dependencies between resources
 4. Write out request response goals: what paths, methods, data are required for each goal
   -4.1: The paths might have dependencies posts/:id/comments 
+  -4.1: There might be database relationships between resources. exg: Post has many comments
