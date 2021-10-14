@@ -1,3 +1,46 @@
+- [React](#react)
+    - [React element](#react-element)
+    - [Nesting React elements](#nesting-react-elements)
+    - [Writing React](#writing-react)
+    - [Component](#component)
+      - [Creating a reusable and configuratble component](#creating-a-reusable-and-configuratble-component)
+    - [jsx](#jsx)
+      - [Delimiter](#delimiter)
+    - [Props](#props)
+    - [State](#state)
+    - [Propagating Events](#propagating-events)
+      - [Virtual DOM](#virtual-dom)
+      - [JSX Attribute expressions](#jsx-attribute-expressions)
+      - [JSX Boolean expressions](#jsx-boolean-expressions)
+      - [JSX comments](#jsx-comments)
+      - [JSX Spread syntax](#jsx-spread-syntax)
+    - [Custom attributes](#custom-attributes)
+      - [class Components](#class-components)
+      - [Lifecycle Methods](#lifecycle-methods)
+    - [One time data loading.](#one-time-data-loading)
+    - [componentDidUnmount()](#componentdidunmount)
+    - [defaultProps](#defaultprops)
+- [Events](#events)
+    - [Controlled events vs Uncontrolled Events](#controlled-events-vs-uncontrolled-events)
+- [Ref in React](#ref-in-react)
+- [HOOKS](#hooks)
+  - [useState](#usestate)
+  - [UseEffect](#useeffect)
+    - [useEffect clean](#useeffect-clean)
+      - [Multiple effect api search pattern](#multiple-effect-api-search-pattern)
+  - [Setting up to listen to events outside the component](#setting-up-to-listen-to-events-outside-the-component)
+    - [Solution](#solution)
+- [Programmatic navigation by ourselves](#programmatic-navigation-by-ourselves)
+  - [Steps:](#steps)
+- [Context](#context)
+  - [Create a context](#create-a-context)
+    - [To insert data](#to-insert-data)
+      - [Default value](#default-value)
+      - [Provider](#provider)
+    - [To get data](#to-get-data)
+      - [this.context](#thiscontext)
+      - [Consumer](#consumer)
+
 # React
 
 A ui library.
@@ -563,3 +606,50 @@ export default createBrowserHistory();
 import history from "./path to file exporting createBrowserHistory";
 history.push("/path you want to navigate to");
 ```
+
+# Context
+## Create a context
+
+```js
+import React from 'react'
+export default React.createContext'
+```
+There are two ways to put data in context and two ways to get data out of it
+
+### To insert data
+#### Default value
+```js
+export default React.createContext('default value here as argument')
+```
+#### Provider
+
+### To get data
+#### this.context
+1. First import context
+```ts
+- import Context from '../file/where/context/is'
+```
+2. Create a static method contextType and assign it the created context
+```js
+class someComponent extends React.Component {
+  static contextType = Context
+  render(){
+    // jsx
+  }
+}
+// or without static keyword
+class someComponent extends React.Component {
+  render(){
+    // jsxe
+  }
+}
+someCompoent.contextType = someComponent
+```
+3. Use is via this.context
+  
+```js
+class Component ...{
+  this.context // whatever value is inside the context
+}
+```
+#### Consumer
