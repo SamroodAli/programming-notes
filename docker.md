@@ -20,6 +20,7 @@
 - [Copy command in Dockerfile](#copy-command-in-dockerfile)
 - [Publish flag: Port mapping](#publish-flag-port-mapping)
 - [Setting Working directory using WORKDIR](#setting-working-directory-using-workdir)
+- [Docker Compose](#docker-compose)
 
 ## Container isolation
 
@@ -370,3 +371,28 @@ common place to put our work is /usr/app
 ```Dockerfile
 WORKDIR /usr/app
 ```
+# Docker Compose
+We can automate many of the commands we do with docker cli using Docker compose. Docker compose takes in a yml file named `docker-compose.yml`.
+
+
+```yml
+version: "3"
+services:
+  redis-server:
+    image: "redis"
+  node-server:
+    build: .
+    ports:
+      - "5500:3000"
+```
+
+Services in docker-compose are very much like containers.
+Here first, we specified the version of docker-compose we are going to use.
+We wrote the services we want next. We can give them any names.
+Service 1 : redis-server
+    build and run a container from the image redis
+Service 2 :
+    build from the current directory,
+    this runs only when we have a Dockerfile in the current directory
+    we then access the ports in the container. "ports" command give us an array
+        and use ( - ) to map the array of our port number 5500 to the container's port nunber 3000
