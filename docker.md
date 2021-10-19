@@ -14,6 +14,7 @@
   - [Steps to create a custom image](#steps-to-create-a-custom-image)
 - [Dockerfile](#dockerfile)
 - [Docker Build .](#docker-build-)
+  - [File flag](#file-flag)
     - [Building from cache ( docker memoizing with image generation)](#building-from-cache--docker-memoizing-with-image-generation)
 - [Tagging an image](#tagging-an-image)
 - [Commit: Creating an image from a container](#commit-creating-an-image-from-a-container)
@@ -21,6 +22,12 @@
 - [Publish flag: Port mapping](#publish-flag-port-mapping)
 - [Setting Working directory using WORKDIR](#setting-working-directory-using-workdir)
 - [Docker Compose](#docker-compose)
+  - [docker-compose down](#docker-compose-down)
+  - [docker-system ps](#docker-system-ps)
+- [Docker volume](#docker-volume)
+- [Production grade workflow with docker](#production-grade-workflow-with-docker)
+  - [docker files](#docker-files)
+  - [Docker commands](#docker-commands-1)
 
 ## Container isolation
 
@@ -64,6 +71,8 @@ Lists history of ran docker containers
 ### Docker run
 
 Docker run = docker create and docker start
+
+-d flad runs it in the background.
 
 ### Docker create
 
@@ -276,6 +285,9 @@ Command to build a custom image. It takes in a build context. Here ( . ) It pass
 
 Docker daemon runs each instruction in the Dockerfile in a temporay container created from the image from the previous instruction
 
+## File flag
+Use the -f flag to give a different Dockerfile such as Dockerfile.dev than the default Dockerfile.
+
 1.
 
 ```Dockerfile
@@ -394,5 +406,82 @@ Service 1 : redis-server
 Service 2 :
     build from the current directory,
     this runs only when we have a Dockerfile in the current directory
-    we then access the ports in the container. "ports" command give us an array
-        and use ( - ) to map the array of our port number 5500 to the container's port nunber 3000
+    we then access the ports in the container. We give it an array and an item with "5500:3000" to map 5500 to 3000 of the container running node-server.
+
+
+One of the features of creating containers with docker-compose is that it gives us for free networking between containers.
+
+One other feature is automating many of the commands we do with docker cli.
+
+```md
+  `docker run my image`
+
+```
+
+## docker-compose down
+Docker-compose down stops all containers created using "up".
+
+## docker-system ps
+It has to run in the directory where we are running the docker-compose containers.
+
+| Purpose | Cli  | Compose  |
+|---|---|--|
+|Run a container | docker run image  | docker-compose up  |
+| Build and run a container| docker build . and docker run  |  docker-compose up --build |
+| Run a container in the background | docker run -d | docker-compose up -d |
+|Stop a running container | docker kill/stop | docker-compose down
+| status of containers |docker ps| docker-compose psHow to handle docker crashes
+
+Using restart policies
+- no
+- always
+- on-failure: if node process exits with an error code. (code other than 0)
+- unless-stopped: always run unless we stop it
+
+We give policty using in yml restart: "value" pair for the service.
+
+if it is no, it has to be in quotes, as `no` in yaml get's interpreted as boolean false. Here we want the string 'no'
+
+```yml
+version: "3"
+services:
+  redis-server:
+    image: "redis"
+    restart: "no"
+  node-server:
+    build: .
+    restart: on-failure
+    ports:
+      - "5500:3000"
+```
+
+
+One use case of on-failure is for worker process where we if want to it to restart only if it exits with an error code. (citation needed on worker process)
+
+# Docker volume
+Docker volume helps us map the container's files or folders to our local computer's files or folders. This helps us persist data in our local computer running docker container or have development server's like webpack use our local computer's app directory than the container's fs.
+
+we use the -v flag
+```bash
+docker run -v docker run -v ourFileOrFolder:containerFileorFolder
+```
+Example with react
+```bash
+ docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app container/image
+
+```
+When we use the colon  (:)  with the -v flag, we are essentially mapping our fs to the container's fs.
+When we don't use the colon, we are essentially saying, don't map this file or folder. In this example we are mapping our pwd( existing app folder where react lives) to the app folder in container. But /app/node_modules should be an exception. So the react's webpack dev server in the container will use the node_modules inside for dependencies but listen to changes in our local computer's app directory giving us hot reload while running the app in a container using the dependencies inside the container.
+
+# Production grade workflow with docker
+## docker files
+- Production: `Dockerfile`
+- development: `Dockerfile.dev`
+## Docker commands
+
+| Instructon   | instruction  |
+|---|---|
+|docker dev build   | docker build -f Dockerfile.dev  |
+|docker image tagging| docker build -t devsamrood/imageName:latest .|
+|docker port mapping| docker run -p ourPort:containerPort|
+|docker volume mapping| docker run -v ourFileOrFolder:containerFileorFolder|
