@@ -474,6 +474,26 @@ When we use the colon  (:)  with the -v flag, we are essentially mapping our fs 
 When we don't use the colon, we are essentially saying, don't map this file or folder. In this example we are mapping our pwd( existing app folder where react lives) to the app folder in container. But /app/node_modules should be an exception. So the react's webpack dev server in the container will use the node_modules inside for dependencies but listen to changes in our local computer's app directory giving us hot reload while running the app in a container using the dependencies inside the container.
 
 # Production grade workflow with docker
+
+Dockerfile.dev
+```Dockerfile
+FROM node:alpine
+
+USER node
+
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+COPY --chown=node:node ./package.json ./
+
+RUN npm install
+
+COPY --chown=node:node ./ ./
+
+CMD ["npm","start"]
+
+```
+
 ## docker files
 - Production: `Dockerfile`
 - development: `Dockerfile.dev`
@@ -485,3 +505,6 @@ When we don't use the colon, we are essentially saying, don't map this file or f
 |docker image tagging| docker build -t devsamrood/imageName:latest .|
 |docker port mapping| docker run -p ourPort:containerPort|
 |docker volume mapping| docker run -v ourFileOrFolder:containerFileorFolder|
+
+
+
