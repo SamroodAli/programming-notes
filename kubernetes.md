@@ -15,3 +15,17 @@ We use docker to manage individual containers and kubernetes to manage multiple 
 |docker kill [containerId]|kubectl delete pod [pod_name]|
 |docker-compose up --build | kubectl apply -f [config gile name]|
 ||kubectl describe pod [pod_name]|
+
+
+# K8s objects
+
+# Kubernetes Pods
+
+Pods are the most basic units available in kubernetes. Pods run containers inside them. Their life is the same as the container's life inside.
+
+
+# Deployment
+Deployments are another objects of K8s. They are a higher level abstraction for managing pods. They make sure the required count of pods are always running. If one fails, it will redeploy another.
+
+# Service
+Service makes networking between pods a lot easier and intuitive.
