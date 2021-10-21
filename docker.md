@@ -7,6 +7,7 @@
     - [Cleaning up containers with `prune`](#cleaning-up-containers-with-prune)
     - [Getting logs from a container using docker logs](#getting-logs-from-a-container-using-docker-logs)
     - [Stopping a docker container with stop](#stopping-a-docker-container-with-stop)
+  - [Killing all containers](#killing-all-containers)
     - [The -it flag (-i flag and -t flag)](#the--it-flag--i-flag-and--t-flag)
   - [Executing additional commands in a container](#executing-additional-commands-in-a-container)
   - [Opening up a shell/terminal in a container](#opening-up-a-shellterminal-in-a-container)
@@ -177,6 +178,11 @@ We can also manually send a SIGKILL command using `docker kill`
 ```bash
 docker kill $containerId
 ```
+## Killing all containers
+```bash
+docker kill $(docker ps -q)
+```
+
 
 Background on Process and std i/o
 a process is any active (running) instance of a program.
@@ -506,5 +512,13 @@ CMD ["npm","start"]
 |docker port mapping| docker run -p ourPort:containerPort|
 |docker volume mapping| docker run -v ourFileOrFolder:containerFileorFolder|
 
+# Docker images to docker hub
 
+Pushing to docker hub docker images is easy.
 
+```bash
+docker push imageName
+
+```
+
+image name by convention  is dockerId/nameForImage
