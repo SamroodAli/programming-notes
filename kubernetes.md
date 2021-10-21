@@ -124,3 +124,61 @@ kubectl delete deployment deployment-name
 kubectl rollout restart deployment [deployment_name]
 
 ```
+
+# Kubernetes services
+
+1. Cluster IP
+
+Sets up an easy to remember URL to access a pod. Only exposes pods in the cluster.
+
+2. Node Port
+Makes a pod accessible from outside the cluster. Usually only used for dev purposes.
+
+3. Load Balancer
+Makes a pod accessible from outside the cluster. This is the right way to expose a pod to the outside world.
+
+4. External Name
+  Redirects an in-cluser request to a CNAME url. Don't worry about this one for now.
+
+# Creating a node port service
+
+node => node port service port=> pod/container port
+
+```yaml
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: serviceName
+spec:
+  type: ServiceType example: NodePort
+  selector:
+    matchLabels:
+      someLabelKey:someValue of pods
+  ports:
+    - name: portName
+      protocol: TCP
+      port: nodeportservicePort
+      targetPort: containerPort
+```
+
+Example
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv
+spec:
+  selector:
+    matchLabel:
+      app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
+```
+ 
+We have to specify two ports here.
+
+The target port is the port from the project running in the container. For example a node express server might be listening on port on port 4000. The port before target port is the port for the service type. Here NodePort service exposes ports as well. Usually they are both given the same port
