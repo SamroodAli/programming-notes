@@ -214,3 +214,5 @@ function onError(err,socket){
   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
 }
 ```
+# Request and Response are readable streams
+req.pipe(res) is used to pipe the request readable stream to res writable stream

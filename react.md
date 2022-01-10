@@ -674,3 +674,15 @@ This is used when we have multiple context objects.
     {(value) => this.renderSubmit(value)}
   </LanguageContext.Consumer>
 ```
+
+
+# JSX syntax transformations
+ui = <Capitalized /> // React.createElement(Capitalized)
+ui = <property.access /> // React.createElement(property.access)
+ui = <Property.Access /> // React.createElement(Property.Access)
+ui = <Property['Access'] /> // SyntaxError
+ui = <lowercase /> // React.createElement('lowercase')
+ui = <kebab-case /> // React.createElement('kebab-case')
+ui = <Upper-Kebab-Case /> // React.createElement('Upper-Kebab-Case')
+ui = <Upper_Snake_Case /> // React.createElement(Upper_Snake_Case)
+ui = <lower_snake_case /> /

@@ -49,3 +49,18 @@ Steps:
 4. Write out request response goals: what paths, methods, data are required for each goal
   -4.1: The paths might have dependencies posts/:id/comments 
   -4.1: There might be database relationships between resources. exg: Post has many comments
+
+
+# Creating a service
+
+Create a dockerfile
+Create a dockerignore to ignore node_modules
+Push the image to dockerhub
+write deployment and service yaml file
+update skaffold to create new artifact if using skaffold
+update route in ingress
+
+
+# Gotchas
+1. You need to put jwt in cookies as in the initial request from the browser, only cookies are sent and we need this jwt in the cookie to get it
+2. Signout request has to be from the client side, in a component in next js as server side signout request doesnt make sense as signout is essentially clearing the cookies in the browser holding the jwt token

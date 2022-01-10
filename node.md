@@ -162,3 +162,9 @@ Stderr && console.error
 process.stderr.write("Error message")
 console.error("Oops")
 ```
+
+# CORS
+Cors is three parts
+the protocol : http/https
+the domain without the path , eg: www.google.com
+the port: http: 80 and https: 443

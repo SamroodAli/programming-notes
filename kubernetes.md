@@ -118,7 +118,7 @@ kubectl delete deployment deployment-name
 2. Make updates to codebase.
 3. Build the image
 4. Push the image to docker hub
-5. Run the rollout and restart comman
+5. Run the rollout and restart command
 
 ```
 kubectl rollout restart deployment [deployment_name]
@@ -182,3 +182,124 @@ spec:
 We have to specify two ports here.
 
 The target port is the port from the project running in the container. For example a node express server might be listening on port on port 4000. The port before target port is the port for the service type. Here NodePort service exposes ports as well. Usually they are both given the same port
+
+
+# Creating a cluster service
+
+A cluster service helps us communicate with a pod. This does not expose the pod to internet. It still is only available within the cluster.
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: comments
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
+
+```
+
+# Creating a cluster along with deployment
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments
+  template:
+    metadata:
+      labels:
+        app: comments
+    spec:
+      containers:
+        - name: comments
+          image: devsamrood/comments
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: comments
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
+```
+# Load Balancer Service
+
+A load balancer service tells kubernetes to reach out to it's provider and provision a load balancer. Gets traffic in to a single pod.
+Load balancer is not really part of the cluster. It is provided by the provider such as AWS,Azure etc.
+
+A load balancer helps get traffic into our cluster. But it does not talk to all the pods with cluster services. Instead, it talks to an ingress controller.
+This is the right way to expose pods to the outside world. We will use a load balancer service to talk to our pods through their cluster service with the help of an ingress controller
+
+# Ingress Controller/Ingress
+
+[Ingress on Kubernetes](https://kubernetes.io/docs/concepts/services-networking/ingress)
+
+A pod with a set of routing rules to distribute traffic to other services. A load balancer routes traffic to an ingress controller and ingress controller has the rules to direct this traffic to the different cluster services ( to pods) in our services
+
+A load balancer helps get traffic into our cluster. But it does not talk to all the pods with cluster services. Instead, it tales to an ingress controller.
+
+
+# Ingress-nginx
+We are using ingress-nginx to create both an ingress controller in our cluster and a load balancer
+
+Read this documentation on how to do that for specific providers.
+[Deploy a ingress controller in our cluster](https://kubernetes.github.io/ingress-nginx/deploy/)
+
+As per the instruction in Ingress-nginx, we will use the following command for minikube.(Check the website to make sure)
+
+```bash
+minikube addons enable ingress
+```
+
+# thisisunsafe
+literally type thisisunsafe when browser does not let you access your ingress service
+
+# Kubernetes secret
+
+```bash
+kubectl create secret generic name-of-secret --from-literal=key=value
+```
+We are creating a generic secret (All purposes secret). The key value should be replaced by our key value pair
+
+# Namespaces
+Namespaces are a way to organise resources in a kubernetes cluster. We can access services with their virtual ip ( route names) only in the same namespace.
+
+If we want to access a service in another namespace,
+1. first get namespace
+```bash
+kubectl get namespaces
+```
+2. Get services in namespaces
+
+```bash
+kubectl get services -n [namespace name]
+```
+
+3. Access routes
+
+http://nameofservice.nameofnamespace.svc.cluster.local
+
+
+
+# Port forwarding without node port in development environemnt
+
+1. Get pod name using kubectl get pods
+2. kubectl port-forwarding podname localport:podPort

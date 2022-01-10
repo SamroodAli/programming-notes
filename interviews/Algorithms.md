@@ -177,8 +177,6 @@ T(n + log(n)) => O(n)
 ```math
 T(n! + 10n) => O(n!)
 ```
-
-
 # Algorithms
 ## Recursion
 Solving a Problem Recursively:
@@ -192,3 +190,6 @@ Because every recursive problem must have a base and recursive case, we can foll
 Recursion allows us to solve problems in an elegant way. However, recursion is a tool that is only appropriate for certain problems. Look to the struture of a problem to figure out if it can be solved recursively. 
 Recursion is used to solve problems that can be decomposed into smaller versions of the same problem. 
 For example we can decompose fib(n) into fib(n - 1) + fib(n - 2). Intuitively, we know that fib(n - 1) is a "smaller" or "easier" problem than fib(n). The easiest subproblem is fib(1) or fib(2) because the answer is simply 1; this is an assumption in the fibonacci sequence. We use the easiest subproblems as the base case in recursion.
+
+
+
